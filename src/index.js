@@ -17,7 +17,7 @@ import {
   getFolderPath
 } from './utils';
 
-const root = process.env.PWD;
+const root = process.cwd();
 const config = require(path.join(root, 'gettext.config.js'));
 
 module.exports = function(source) {
@@ -27,7 +27,7 @@ module.exports = function(source) {
   }
 
   const output = {
-    path: `${root}/${config.output.replace('[filename]', getFilename(this.resourcePath)) || 'en.po'}`
+    path: `${root}/${config.output || 'en.po'}`
   }
 
   const methodNames = config.methods || [DEFAULT_GETTEXT];
@@ -58,10 +58,9 @@ module.exports = function(source) {
     }
 
   } catch (error) {
-    const header_prefix = config.header_prefix || '';
     const header = formatHeader(config.header);
     const body = formatTranslations(translations);
-    output.source = `${header_prefix}\n${header}\n${body}`
+    output.source = `${header}\n${body}`
 
     mkdirp.sync(getFolderPath(output.path));
     fs.writeFileSync(output.path, output.source);

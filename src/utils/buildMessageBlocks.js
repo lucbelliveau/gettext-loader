@@ -17,7 +17,7 @@ import {
   
 } from 'ramda';
 
-const root = process.env.PWD;
+const root = process.cwd();
 const config = require(path.join(root, 'gettext.config.js'));
 
 export const buildMsgstr = map((num) => `msgstr[${num}] ""\n`)
