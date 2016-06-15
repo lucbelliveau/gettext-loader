@@ -73,9 +73,10 @@ module.exports = function (source) {
       }
     })();
   } catch (error) {
+    var header_prefix = config.header_prefix || '';
     var header = (0, _utils.formatHeader)(config.header);
     var body = formatTranslations(translations);
-    output.source = header + '\n' + body;
+    output.source = header_prefix + '\n' + header + '\n' + body;
 
     _mkdirp2.default.sync((0, _utils.getFolderPath)(output.path));
     _fs2.default.writeFileSync(output.path, output.source);
