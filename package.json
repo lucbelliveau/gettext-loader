@@ -6,7 +6,7 @@
   "scripts": {
     "build:dev": "mkdir -p node_modules/gettext-loader && npm run build && cp -R dist/ node_modules/gettext-loader/",
     "example": "npm run build:dev && webpack ./assets/index.js",
-    "build": "gulp utils && babel src/ --out-dir dist/",
+    "build": "gulp utils && ./node_modules/.bin/babel src/ --out-dir dist/",
     "test": "mocha --compilers js:babel-core/register"
   },
   "repository": {
