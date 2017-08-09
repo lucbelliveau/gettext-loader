@@ -34,14 +34,19 @@ var root = process.cwd();
 var config = require(_path2.default.join(root, 'gettext.config.js'));
 
 module.exports = function (source) {
-  var _this = this;
 
   if (this.cacheable) {
     this.cacheable();
   }
+  var relativeFilename = _path2.default.relative(root, this.resourcePath);
+
+  if (relativeFilename.indexOf('..') >= 0) {
+    // don't consider files outside of root
+    return source;
+  }
 
   var output = {
-    path: root + '/' + (config.output.replace('[filename]', (0, _utils.getFilename)(this.resourcePath)) || 'en.po')
+    path: root + '/' + (config.output.replace('[filename]', relativeFilename) || 'en.po')
   };
 
   var methodNames = config.methods || [DEFAULT_GETTEXT];
@@ -56,22 +61,20 @@ module.exports = function (source) {
   var formatTranslations = (0, _utils.formatWithRequest)(this.request);
 
   try {
-    (function () {
-      var buffer = _fs2.default.readFileSync(output.path);
-      var current = _po2json2.default.parse(buffer);
-      var newStrings = function newStrings(node) {
-        return !current[(0, _ramda.prop)('text')(node)];
-      };
-      var found = (0, _ramda.filter)(newStrings)(translations);
+    var buffer = _fs2.default.readFileSync(output.path);
+    var current = _po2json2.default.parse(buffer);
+    var newStrings = function newStrings(node) {
+      return !current[(0, _ramda.prop)('text')(node)];
+    };
+    var found = (0, _ramda.filter)(newStrings)(translations);
 
-      if (found.length) {
+    if (found.length) {
 
-        console.log(found.length + ' new translations found in ' + (0, _utils.getFilename)(_this.resourcePath));
+      console.log(found.length + ' new translations found in ' + (0, _utils.getFilename)(this.resourcePath));
 
-        output.source = formatTranslations(found);
-        _fs2.default.appendFileSync(output.path, output.source);
-      }
-    })();
+      output.source = formatTranslations(found);
+      _fs2.default.appendFileSync(output.path, output.source);
+    }
   } catch (error) {
     var header_prefix = config.header_prefix || '';
     var header = (0, _utils.formatHeader)(config.header);
