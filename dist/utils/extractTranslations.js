@@ -38,7 +38,10 @@ var extractTranslations = function extractTranslations() {
       };
     };
 
-    return (0, _ramda.map)(addLocation)(translationStrings);
+    var unique = function unique(s) {
+      return gettextLocations[translationStrings.indexOf(s)];
+    };
+    return (0, _ramda.map)(addLocation)((0, _ramda.uniqBy)(unique)(translationStrings));
   };
 };
 
