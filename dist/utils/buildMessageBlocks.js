@@ -31,13 +31,13 @@ var buildMsgstrs = exports.buildMsgstrs = function buildMsgstrs(num) {
   return (0, _ramda.compose)((0, _ramda.join)(''), buildMsgstr)((0, _ramda.range)(0, num));
 };
 var getNumPlurals = exports.getNumPlurals = (0, _ramda.compose)(parseInt, _ramda.last, _ramda.head, (0, _ramda.split)(';'));
-
 var formatMessageBlock = exports.formatMessageBlock = function formatMessageBlock(accum, translation) {
   var path = (0, _makeRelativePath2.default)(translation.path);
 
   var translationBlock = (0, _ramda.concat)('#: ' + path + ' ' + translation.loc.line + ':' + translation.loc.column + '\n', 'msgid "' + translation.text + '"');
 
   if ((0, _isPluralForm2.default)(translation.text)) {
+    translationBlock += '\nmsgid_plural ""';
     var msgstrs = (0, _ramda.compose)(buildMsgstrs, getNumPlurals)(config.header['Plural-Forms']);
 
     return (0, _ramda.compose)((0, _ramda.concat)(accum), (0, _ramda.concat)(translationBlock), (0, _ramda.concat)('\n'), (0, _ramda.concat)(msgstrs))('\n');
