@@ -1,6 +1,6 @@
 {
   "name": "gettext-loader",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "gettext webpack loader for creating en.po files",
   "main": "dist/index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "gettext",
     "webpack",
     "loader",
-    "esprima",
+    "espree",
     "i18n",
     "ast",
     "po",
@@ -30,12 +30,12 @@
   },
   "homepage": "https://github.com/mrblueblue/gettext-loader#readme",
   "devDependencies": {
+    "babel-cli": "^6.2.1",
     "babel-core": "^6.2.1",
     "babel-loader": "^6.1.0",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",
-    "babel-cli": "^6.2.1",
     "chai": "^3.4.1",
     "coffee-loader": "^0.7.2",
     "dot-loader": "^0.1.1",
@@ -47,8 +47,9 @@
     "webpack": "^1.12.2"
   },
   "dependencies": {
-    "esprima-fb": "^15001.1001.0-dev-harmony-fb",
+    "espree": "^4.0.0",
     "estree-utils": "^0.1.1",
+    "json-diff": "^0.5.2",
     "loader-utils": "^0.2.11",
     "mkdirp": "^0.5.1",
     "po2json": "^0.4.1",
